@@ -1,0 +1,20 @@
+server {
+	listen 80 default_server;
+	listen [::]:80 default_server;
+
+	listen 443 ssl default_server;
+	listen [::]:443 ssl default_server;
+	
+	ssl_certificate /etc/nginx/ssl/certif.pem;
+    ssl_certificate_key /etc/nginx/ssl/certif.key;
+
+	server_name _;
+
+	location / {
+		deny all;
+	}
+	
+	location ~ /\.ht {
+		deny all;
+	}
+}

@@ -1,0 +1,25 @@
+[sshd]
+# To use more aggressive sshd modes set filter parameter "mode" in jail.local:
+# normal (default), ddos, extra or aggressive (combines all).
+# See "tests/files/logs/sshd" or "filter.d/sshd.conf" for usage example and details.
+mode   = ddos
+port    = ssh
+logpath = %(sshd_log)s
+backend = %(sshd_backend)s
+
+[nginx-http-auth]
+enabled  = true
+mode    = normal
+port     = http,https
+logpath = %(nginx_error_log)s
+
+[nginx-req-limit]
+enabled = true
+filter = nginx-limit-req
+action   = iptables-ipset-proto4[name=fail2ban-nginx, port="http,https", protocol=tcp, bantime=0]
+logpath = /var/log/nginx/error.log
+maxfailures = 2
+findtime = 600
+bantime = 7200
+maxretry = 4
+ignoreip=66.130.112.0/24 40.112.0.0/13, 40.74.0.0/15, 40.80.0.0/12, 40.124.0.0/16, 40.120.0.0/14, 40.76.0.0/14, 40.125.0.0/17, 40.96.0.0/12

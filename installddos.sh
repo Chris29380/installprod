@@ -89,8 +89,34 @@ install_f2b(){
     iptables -A port-scanning -p tcp --tcp-flags SYN,ACK,FIN,RST RST -m limit --limit 1/s --limit-burst 2 -j RETURN 
     echo -e "${COLOR2}Rule 27 ... ${NC}"
     iptables -A port-scanning -j DROP
-    echo
     
+    echo
+    echo -e "${COLOR2}Port HTTP 80 ... ${NC}"
+    iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
+    iptables -A INPUT -p udp -m udp --dport 80 -j ACCEPT
+    iptables -A INPUT -p tcp -m tcp --sport 80 -j ACCEPT
+    iptables -A INPUT -p udp -m udp --sport 80 -j ACCEPT
+    echo
+    echo -e "${COLOR2}Port HTTPS 443 ... ${NC}"
+    iptables -A INPUT -p tcp -m tcp --dport 443 -j ACCEPT
+    iptables -A INPUT -p udp -m udp --dport 443 -j ACCEPT
+    iptables -A INPUT -p tcp -m tcp --sport 443 -j ACCEPT
+    iptables -A INPUT -p udp -m udp --sport 443 -j ACCEPT
+    echo
+    echo -e "${COLOR2}Port SSH 22 ... ${NC}"
+    iptables -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
+    iptables -A INPUT -p udp -m udp --dport 22 -j ACCEPT
+    iptables -A INPUT -p tcp -m tcp --sport 22 -j ACCEPT
+    iptables -A INPUT -p udp -m udp --sport 22 -j ACCEPT
+    echo
+    echo -e "${COLOR2}Port FTP 21 ... ${NC}"
+    iptables -A INPUT -p tcp -m tcp --dport 21 -j ACCEPT
+    iptables -A INPUT -p udp -m udp --dport 21 -j ACCEPT
+    iptables -A INPUT -p tcp -m tcp --sport 21 -j ACCEPT
+    iptables -A INPUT -p udp -m udp --sport 21 -j ACCEPT
+    echo
+    iptables -t filter -A INPUT -j DROP
+
     echo -e "\n${COLOR3}txAdmin Port ? ${NC}(default:40120)"
     read -p "txAdmin port: " txport       
     if [ "${txport}" -ge 0 ] && [ "${txport}" -le 65535 ]; then
@@ -111,48 +137,12 @@ install_f2b(){
         iptables -A INPUT -p tcp -m tcp --sport ${cfxport} -j ACCEPT
         iptables -A INPUT -p udp -m udp --sport ${cfxport} -j ACCEPT
     else
-    echo -e "\n${COLOR1}Wrong cfxport number${NC} it must be 0 to 65535"
-    exit 0
-fi
-
-    echo -e "\n${COLOR3}Open HTTP Port ? ${NC}(y/n)"
-    read -p "port 80 : " httpuse
-    echo -e "\n${COLOR3}Open HTTPS Port ? ${NC}(y/n)"
-    read -p "port 443 : " httpsuse
-    echo -e "\n${COLOR3}Open SSH Port ? ${NC}(y/n)"
-    read -p "port 22 : " sshuse
-    echo -e "\n${COLOR3}Open FTP Port ? ${NC}(y/n)"
-    read -p "port 21 : " ftpuse
-
-    if [ "${httpuse}" = "yes" ]; then
-        iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
-        iptables -A INPUT -p udp -m udp --dport 80 -j ACCEPT
+        echo -e "\n${COLOR1}Wrong cfxport number${NC} it must be 0 to 65535"
+        exit 0
     fi
-
-    if [ "${httpsuse}" = "yes" ]; then
-        iptables -A INPUT -p tcp -m tcp --dport 443 -j ACCEPT
-        iptables -A INPUT -p udp -m udp --dport 443 -j ACCEPT
-        iptables -A INPUT -p tcp -m tcp --sport 443 -j ACCEPT
-        iptables -A INPUT -p udp -m udp --sport 443 -j ACCEPT
-    fi
-
-    if [ "${sshuse}" = "yes" ]; then
-        iptables -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
-        iptables -A INPUT -p udp -m udp --dport 22 -j ACCEPT
-        iptables -A INPUT -p tcp -m tcp --sport 22 -j ACCEPT
-        iptables -A INPUT -p udp -m udp --sport 22 -j ACCEPT
-    fi
-
-    if [ "${ftpuse}" = "yes" ]; then
-        iptables -A INPUT -p tcp -m tcp --dport 21 -j ACCEPT
-        iptables -A INPUT -p udp -m udp --dport 21 -j ACCEPT
-        iptables -A INPUT -p tcp -m tcp --sport 21 -j ACCEPT
-        iptables -A INPUT -p udp -m udp --sport 21 -j ACCEPT
-    fi
-
-    iptables -t filter -A INPUT -j DROP
     
     iptables-save > /etc/iptables/rules.v4
+    iptables-save > /etc/iptables/rules.v6
     echo -e "${COLOR2}Configuration done... ${NC}"
     echo
 }

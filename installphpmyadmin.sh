@@ -11,6 +11,10 @@ if [ "$(id -u)" != "0" ]; then
     exit 1
 fi
 
+basic_single_escape () {
+    echo "$1" | sed 's/\(['"'"'\]\)/\\\1/g'
+}
+
 install_phpm(){
     echo
     echo -e "${COLOR2}UPDATE Packages ... ${NC}"
@@ -29,6 +33,31 @@ install_phpm(){
     else
         echo
         echo -e "\n${COLOR1}Url is empty, stop the process... ${NC}"
+        exit 0
+    fi
+    echo
+    echo -e "${COLOR2}PHPmyadmin Configuration ... ${NC}"
+    cp ./phpmyadmin/config.inc.php /usr/share/phpmyadmin/config.inc.php
+    echo
+    echo -e "\n${COLOR3}Pma User name ? ${NC}"
+    read -p "User name : " pmauser
+    echo
+    echo -e "\n${COLOR3}Pma password ? ${NC}"
+    read -p "Pma password : " pmapwd
+    if [ "${pmauser}" != "" ]; then
+        pmauserc=`basic_single_escape "$pmauser"`
+        sed -i "s/user_here/$pmauserc/g" /usr/share/phpmyadmin/config.inc.php
+    else
+        echo
+        echo -e "\n${COLOR1}field is empty, stop the process... ${NC}"
+        exit 0
+    fi
+    if [ "${pmapwd}" != "" ]; then
+        pmapwdc=`basic_single_escape "$pmapwd"`
+        sed -i "s/pwd_here/$pmapwdc/g" /usr/share/phpmyadmin/config.inc.php
+    else
+        echo
+        echo -e "\n${COLOR1}field is empty, stop the process... ${NC}"
         exit 0
     fi
     echo

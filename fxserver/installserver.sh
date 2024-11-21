@@ -17,8 +17,8 @@ startserver(){
 
     screen -S $SCREEN -X quit
     screen -dm -S $SCREEN
-    screen -x $SCREEN -X stuff "bash "$FIVEM_PATH"/run.sh +set txAdminPort ${txport}"
-    screen -r fxserver
+    screen -x $SCREEN -X stuff "bash $FIVEM_PATH/run.sh +set txAdminPort ${txport}"
+    screen -r $SCREEN
 
 }
 

@@ -42,7 +42,7 @@ url=`echo $LATEST_VERSION | sed -r 's/[./]+//g'`
 echo Latest FXServer build: ${url}
 echo "https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/$url/fx.tar.xz"
 wget -O /home/fivem/txAdmin/fxserver/fx.tar.xz -q --show-progress "https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/$url/fx.tar.xz"
-tar -xvf /home/fivem/txAdmin/fxserver/fx.tar.xz
+tar -xvf /home/fivem/txAdmin/fxserver/fx.tar.xz -C /home/fivem/txAdmin/fxserver/
 #rm /home/fivem/txAdmin/fxserver/fx.tar.xz
 echo
 echo -e "${COLOR2}Install Screen ... ${NC}"

@@ -92,26 +92,26 @@ install_f2b(){
     echo -e "${COLOR2}Port HTTP 80 ... ${NC}"
     iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
     iptables -A INPUT -p udp -m udp --dport 80 -j ACCEPT
-    iptables -A INPUT -p tcp -m tcp --sport 80 -j ACCEPT
-    iptables -A INPUT -p udp -m udp --sport 80 -j ACCEPT
+    iptables -A OUTPOUT -p tcp -m tcp --sport 80 -j ACCEPT
+    iptables -A OUTPOUT -p udp -m udp --sport 80 -j ACCEPT
     echo
     echo -e "${COLOR2}Port HTTPS 443 ... ${NC}"
     iptables -A INPUT -p tcp -m tcp --dport 443 -j ACCEPT
     iptables -A INPUT -p udp -m udp --dport 443 -j ACCEPT
-    iptables -A INPUT -p tcp -m tcp --sport 443 -j ACCEPT
-    iptables -A INPUT -p udp -m udp --sport 443 -j ACCEPT
+    iptables -A OUTPOUT -p tcp -m tcp --sport 443 -j ACCEPT
+    iptables -A OUTPOUT -p udp -m udp --sport 443 -j ACCEPT
     echo
     echo -e "${COLOR2}Port SSH 22 ... ${NC}"
     iptables -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
     iptables -A INPUT -p udp -m udp --dport 22 -j ACCEPT
-    iptables -A INPUT -p tcp -m tcp --sport 22 -j ACCEPT
-    iptables -A INPUT -p udp -m udp --sport 22 -j ACCEPT
+    iptables -A OUTPOUT -p tcp -m tcp --sport 22 -j ACCEPT
+    iptables -A OUTPOUT -p udp -m udp --sport 22 -j ACCEPT
     echo
     echo -e "${COLOR2}Port FTP 21 ... ${NC}"
     iptables -A INPUT -p tcp -m tcp --dport 21 -j ACCEPT
     iptables -A INPUT -p udp -m udp --dport 21 -j ACCEPT
-    iptables -A INPUT -p tcp -m tcp --sport 21 -j ACCEPT
-    iptables -A INPUT -p udp -m udp --sport 21 -j ACCEPT
+    iptables -A OUTPOUT -p tcp -m tcp --sport 21 -j ACCEPT
+    iptables -A OUTPOUT -p udp -m udp --sport 21 -j ACCEPT
     echo
     iptables -t filter -A INPUT -j DROP
 
@@ -120,8 +120,8 @@ install_f2b(){
     if [ "${txport}" -ge 0 ] && [ "${txport}" -le 65535 ]; then
         iptables -A INPUT -p tcp -m tcp --dport ${txport} -j ACCEPT
         iptables -A INPUT -p udp -m udp --dport ${txport} -j ACCEPT
-        iptables -A INPUT -p tcp -m tcp --sport ${txport} -j ACCEPT
-        iptables -A INPUT -p udp -m udp --sport ${txport} -j ACCEPT
+        iptables -A OUTPOUT -p tcp -m tcp --sport ${txport} -j ACCEPT
+        iptables -A OUTPOUT -p udp -m udp --sport ${txport} -j ACCEPT
     else
         echo -e "\n${COLOR1}Wrong txport number${NC} it must be 0 to 65535"
         exit 0
@@ -132,8 +132,8 @@ install_f2b(){
     if [ "${cfxport}" -ge 0 ] && [ "${cfxport}" -le 65535 ]; then
         iptables -A INPUT -p tcp -m tcp --dport ${cfxport} -j ACCEPT
         iptables -A INPUT -p udp -m udp --dport ${cfxport} -j ACCEPT
-        iptables -A INPUT -p tcp -m tcp --sport ${cfxport} -j ACCEPT
-        iptables -A INPUT -p udp -m udp --sport ${cfxport} -j ACCEPT
+        iptables -A OUTPOUT -p tcp -m tcp --sport ${cfxport} -j ACCEPT
+        iptables -A OUTPOUT -p udp -m udp --sport ${cfxport} -j ACCEPT
     else
         echo -e "\n${COLOR1}Wrong cfxport number${NC} it must be 0 to 65535"
         exit 0

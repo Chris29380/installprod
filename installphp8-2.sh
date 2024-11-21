@@ -17,8 +17,7 @@ install_php(){
     apt-get update
     echo -e "${COLOR2} PHP 8.2 Installation ... ${NC}"
     echo
-    apt-get install php8.2 php8.2-cli php8.2-{bz2,curl,mbstring,intl}
-    apt-get install php8.2-fpm -y
+    apt-get install php8.2 php8.2-cli php8.2-{bz2,curl,mbstring,intl,fpm} -y
     apt purge apache2 apache2-utils
     echo
     echo -e "${COLOR2} PHP 8.2 Installation done ! ... ${NC}"

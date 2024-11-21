@@ -47,8 +47,8 @@ install_f2b(){
 
     # Logging options.
     #------------------------------------------------------------------------------
-    LOG="LOG --log-level debug --log-tcp-sequence --log-tcp-options"
-    LOG="$LOG --log-ip-options"
+    #LOG="LOG --log-level debug"
+    #LOG="$LOG --log-ip-options"
 
     # Defaults for rate limiting
     #------------------------------------------------------------------------------
@@ -176,18 +176,18 @@ install_f2b(){
 
     # LOG packets, then ACCEPT.
     "$IPTABLES" -N ACCEPTLOG
-    "$IPTABLES" -A ACCEPTLOG -j "$LOG" "$RLIMIT" --log-prefix "ACCEPT "
+    "$IPTABLES" -A ACCEPTLOG -j "$RLIMIT" --log-prefix "ACCEPT "
     "$IPTABLES" -A ACCEPTLOG -j ACCEPT
 
     # LOG packets, then DROP.
     "$IPTABLES" -N DROPLOG
-    "$IPTABLES" -A DROPLOG -j "$LOG" "$RLIMIT" --log-prefix "DROP "
+    "$IPTABLES" -A DROPLOG -j "$RLIMIT" --log-prefix "DROP "
     "$IPTABLES" -A DROPLOG -j DROP
 
     # LOG packets, then REJECT.
     # TCP packets are rejected with a TCP reset.
     "$IPTABLES" -N REJECTLOG
-    "$IPTABLES" -A REJECTLOG -j "$LOG" "$RLIMIT" --log-prefix "REJECT "
+    "$IPTABLES" -A REJECTLOG -j "$RLIMIT" --log-prefix "REJECT "
     "$IPTABLES" -A REJECTLOG -p tcp -j REJECT --reject-with tcp-reset
     "$IPTABLES" -A REJECTLOG -j REJECT
 

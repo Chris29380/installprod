@@ -71,8 +71,6 @@ install_f2b(){
     iptables -A INPUT -p tcp --tcp-flags RST RST -j DROP
     echo -e "${COLOR2}Rule 18 ... ${NC}"
     iptables -A INPUT -m limit --limit 1/s --limit-burst 3 -j RETURN
-    echo -e "${COLOR2}Rule 19 ... ${NC}"
-    iptables -A INPUT -j DROP
     echo -e "${COLOR2}Rule 20 ... ${NC}"
     iptables -t raw -A PREROUTING -p tcp -m tcp --syn -j CT --notrack 
     echo -e "${COLOR2}Rule 21 ... ${NC}"

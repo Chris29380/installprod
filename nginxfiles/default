@@ -19,6 +19,8 @@ server {
 
 	listen 443 ssl;
 	listen [::]:443;
+
+	server_name machine_url_here;
 	
 	ssl_certificate /etc/letsencrypt/live/machine_url_here/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/machine_url_here/privkey.pem;

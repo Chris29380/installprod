@@ -12,7 +12,19 @@ if [ "$(id -u)" != "0" ]; then
 fi
 
 install_ssl(){
-    
+    echo
+    echo -e "${COLOR2} Certbot Installation ... ${NC}"
+    apt install -y certbot python3-certbot-nginx
+    echo
+    echo -e "${COLOR2} Create SSL Certificates ... ${NC}"
+    read -p "Machine Url : " urlmachine
+    if [ "${urlmachine}" != "" ]; then
+        certbot --nginx -d $urlmachine
+    else
+        echo
+        echo -e "\n${COLOR1}Url is empty, stop the process... ${NC}"
+        exit 0
+    fi
     echo
     echo -e "${COLOR2} Create SSL Certificates ... ${NC}"
     read -p "play Url : " urlplay
@@ -57,12 +69,6 @@ install_ssl(){
     echo
     echo -e "\n${COLOR2} Nginx Copy Configuration Files done ! ... ${NC}"
     echo
-    echo -e "\n${COLOR3}Url Server Prod ? ${NC}(ex: play.serverrp.com)"
-    echo -e "You must add A or CNAME Register in your Cloudflare DNS for this url"
-    echo -e "point to the ip of this server"
-    echo -e "if you have a proxy, name this url for ex: prod.serverrp.com"
-    read -p "Url : " urlprod
-    echo
     echo -e "\n${COLOR3}Fivem server port ? ${NC}(default: 30120)"    
     read -p "Port Cfx Server : " cfxport
     echo
@@ -75,6 +81,13 @@ install_ssl(){
     cp ./nginxfiles/default /etc/nginx/sites-enabled/prodssltx.conf
     cp ./nginxfiles/default /etc/nginx/sites-enabled/prodssltx.conf
 
+    if [ "${urlmachine}" != "" ]; then
+        sed -i "s/prodpanel_here/$urlmachine/g" /etc/nginx/sites-enabled/prodsslpanel.conf
+    else
+        echo
+        echo -e "\n${COLOR1}Url is empty, stop the process... ${NC}"
+        exit 0
+    fi
     if [ "${urlplay}" != "" ]; then
         sed -i "s/urlprod_here/$urlprod/g" /etc/nginx/sites-enabled/prodssl.conf
     else

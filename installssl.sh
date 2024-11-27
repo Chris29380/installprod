@@ -12,12 +12,7 @@ if [ "$(id -u)" != "0" ]; then
 fi
 
 install_ssl(){
-    cp ./nginxfiles/nginx.conf /etc/nginx/nginx.conf
-    cp ./nginxfiles/default /etc/nginx/sites-available/default
-    cp ./nginxfiles/default /etc/nginx/sites-enabled/prodssl.conf
-    cp ./nginxfiles/default /etc/nginx/sites-enabled/prodssltx.conf
-    cp ./nginxfiles/default /etc/nginx/sites-enabled/prodssltx.conf
-
+    
     echo
     echo -e "${COLOR2} Create SSL Certificates ... ${NC}"
     read -p "play Url : " urlplay
@@ -67,6 +62,19 @@ install_ssl(){
     echo -e "point to the ip of this server"
     echo -e "if you have a proxy, name this url for ex: prod.serverrp.com"
     read -p "Url : " urlprod
+    echo
+    echo -e "\n${COLOR3}Fivem server port ? ${NC}(default: 30120)"    
+    read -p "Port Cfx Server : " cfxport
+    echo
+    echo -e "\n${COLOR3}txAdmin Port ? ${NC}(default:40120)"
+    read -p "txAdmin port: " txport 
+
+    cp ./nginxfiles/nginx.conf /etc/nginx/nginx.conf
+    cp ./nginxfiles/default /etc/nginx/sites-available/default
+    cp ./nginxfiles/default /etc/nginx/sites-enabled/prodssl.conf
+    cp ./nginxfiles/default /etc/nginx/sites-enabled/prodssltx.conf
+    cp ./nginxfiles/default /etc/nginx/sites-enabled/prodssltx.conf
+
     if [ "${urlplay}" != "" ]; then
         sed -i "s/urlprod_here/$urlprod/g" /etc/nginx/sites-enabled/prodssl.conf
     else
@@ -96,19 +104,13 @@ install_ssl(){
         exit 0
     fi
 
-    echo
-    echo -e "\n${COLOR3}Fivem server port ? ${NC}(default: 30120)"    
-    read -p "Port Cfx Server : " cfxport
     if [ "${cfxport}" != "" ] && [ "${cfxport}" -ge 0 ] && [ "${cfxport}" -le 65535 ]; then
         sed -i "s/ipprod_port_here/localhost:$cfxport/g" /etc/nginx/sites-enabled/prodssl.conf
     else
         echo
         echo -e "\n${COLOR1}Port is empty, or wrong value [ 0 - 65535 ] ... ${NC}"
         exit 0
-    fi
-
-    echo -e "\n${COLOR3}txAdmin Port ? ${NC}(default:40120)"
-    read -p "txAdmin port: " txport       
+    fi      
     if [ "${txport}" -ge 0 ] && [ "${txport}" -le 65535 ]; then
         veriftxport="ok"
     else

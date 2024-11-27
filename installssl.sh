@@ -12,6 +12,12 @@ if [ "$(id -u)" != "0" ]; then
 fi
 
 install_ssl(){
+    cp ./nginxfiles/nginx.conf /etc/nginx/nginx.conf
+    cp ./nginxfiles/default /etc/nginx/sites-available/default
+    cp ./nginxfiles/default /etc/nginx/sites-enabled/prodssl.conf
+    cp ./nginxfiles/default /etc/nginx/sites-enabled/prodssltx.conf
+    cp ./nginxfiles/default /etc/nginx/sites-enabled/prodssltx.conf
+
     echo
     echo -e "${COLOR2} Create SSL Certificates ... ${NC}"
     read -p "play Url : " urlplay
@@ -111,10 +117,6 @@ install_ssl(){
     fi
     if [ "${veriftxport}" == "ok" ]; then
         echo
-        echo -e "\n${COLOR2} Nginx Copy txAdmin Configuration Files ... ${NC}"
-        echo
-        cp ./nginxfiles/prodssltx.conf /etc/nginx/sites-enabled/prodssltx.conf
-        echo
         echo -e "\n${COLOR2} Nginx Configure txAdmin ... ${NC}"
         echo
         echo -e "\n${COLOR3}Url Tx Admin ? ${NC}(ex: txadmin.serverrp.com)"
@@ -131,8 +133,6 @@ install_ssl(){
         sed -i "s/iptxprod_port_here/localhost:$txport/g" /etc/nginx/sites-enabled/prodssltx.conf
 
     fi
-    cp ./nginxfiles/nginx.conf /etc/nginx/nginx.conf
-    cp ./nginxfiles/default /etc/nginx/sites-available/default
     echo
     echo -e "\n${COLOR2}Configuration files done ! ... ${NC}"
     echo

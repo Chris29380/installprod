@@ -82,7 +82,7 @@ install_ssl(){
     cp ./nginxfiles/default /etc/nginx/sites-enabled/prodssltx.conf
 
     if [ "${urlmachine}" != "" ]; then
-        sed -i "s/prodpanel_here/$urlmachine/g" /etc/nginx/sites-enabled/prodsslpanel.conf
+        sed -i "s/machine_url_here/$urlmachine/g" /etc/nginx/sites-enabled/default
     else
         echo
         echo -e "\n${COLOR1}Url is empty, stop the process... ${NC}"
@@ -125,28 +125,10 @@ install_ssl(){
         exit 0
     fi      
     if [ "${txport}" -ge 0 ] && [ "${txport}" -le 65535 ]; then
-        veriftxport="ok"
+        sed -i "s/iptxprod_port_here/localhost:$txport/g" /etc/nginx/sites-enabled/prodssltx.conf
     else
         echo -e "\n${COLOR1}Wrong txport number${NC} it must be 0 to 65535"
         exit 0
-    fi
-    if [ "${veriftxport}" == "ok" ]; then
-        echo
-        echo -e "\n${COLOR2} Nginx Configure txAdmin ... ${NC}"
-        echo
-        echo -e "\n${COLOR3}Url Tx Admin ? ${NC}(ex: txadmin.serverrp.com)"
-        echo -e "You must add A or CNAME Register in your Cloudflare DNS for this url"
-        echo -e "point to the ip of this server"
-        read -p "Url : " urltx
-        if [ "${urltx}" != "" ]; then
-            sed -i "s/urltx_here/$urltx/g" /etc/nginx/sites-enabled/prodssltx.conf
-        else
-            echo
-            echo -e "\n${COLOR1}Url is empty, stop the process... ${NC}"
-            exit 0
-        fi
-        sed -i "s/iptxprod_port_here/localhost:$txport/g" /etc/nginx/sites-enabled/prodssltx.conf
-
     fi
     echo
     echo -e "\n${COLOR2}Configuration files done ! ... ${NC}"

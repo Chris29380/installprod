@@ -36,25 +36,28 @@ echo
 echo -e "${COLOR2}Install fxserver ... ${NC}"
 mkdir -p -v /home/fivem/txAdmin/fxserver
 echo
-echo -e "${COLOR2}Install Latest artifact ... ${NC}"
-LATEST_VERSION=`wget -q -O - https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/ | grep '<a href' | tail -1 | grep -Po '(?<=href=").{47}'`
-url=`echo $LATEST_VERSION | sed -r 's/[./]+//g'`
-echo Latest FXServer build: ${url}
-echo "https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/$url/fx.tar.xz"
-wget -O /home/fivem/txAdmin/fxserver/fx.tar.xz -q --show-progress "https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/$url/fx.tar.xz"
-tar -xvf /home/fivem/txAdmin/fxserver/fx.tar.xz -C /home/fivem/txAdmin/fxserver/
-#rm /home/fivem/txAdmin/fxserver/fx.tar.xz
-echo
-echo -e "${COLOR2}Install Screen ... ${NC}"
-apt-get install screen -y
-echo
-echo -e "${COLOR2}Start Server ... ${NC}"
-echo
-echo -e "\n${COLOR3}txAdmin Port ? ${NC}(default:40120)"
-read -p "txAdmin port: " txport       
-if [ "${txport}" -ge 0 ] && [ "${txport}" -le 65535 ]; then
-    startserver
+echo -e "${COLOR2}Install Latest artifact url ?... ${NC}"
+read -p "artifact url :" urlartifact
+if [ "$urlartifact" != "" ]; then
+    wget -O /home/fivem/txAdmin/fxserver/fx.tar.xz -q --show-progress $urlartifact
+    tar -xvf /home/fivem/txAdmin/fxserver/fx.tar.xz -C /home/fivem/txAdmin/fxserver/
+    rm /home/fivem/txAdmin/fxserver/fx.tar.xz
+    echo
+    echo -e "${COLOR2}Install Screen ... ${NC}"
+    apt-get install screen -y
+    echo
+    echo -e "${COLOR2}Start Server ... ${NC}"
+    echo
+    echo -e "\n${COLOR3}txAdmin Port ? ${NC}(default:40120)"
+    read -p "txAdmin port: " txport       
+    if [ "${txport}" -ge 0 ] && [ "${txport}" -le 65535 ]; then
+        startserver
+    else
+        echo -e "\n${COLOR1}Wrong txport number${NC} it must be 0 to 65535"
+        exit 0
+    fi
 else
-    echo -e "\n${COLOR1}Wrong txport number${NC} it must be 0 to 65535"
+    echo -e "${COLOR1}url is empty !... ${NC}"
     exit 0
 fi
+

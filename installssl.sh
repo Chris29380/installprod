@@ -13,25 +13,46 @@ fi
 
 install_ssl(){
     echo
-    echo -e "${COLOR2} COPY SSL Certificates ... ${NC}"
-    echo -e "\n You must have copy/paste ssl certificate pem and key in ssl directory"
-    echo -e "\n before use this ssl installation, however files are empty..."
+    echo -e "${COLOR2} Create SSL Certificates ... ${NC}"
+    read -p "play Url : " urlplay
+    if [ "${urlplay}" != "" ]; then
+        certbot --nginx -d $urlplay
+    else
+        echo
+        echo -e "\n${COLOR1}Url is empty, stop the process... ${NC}"
+        exit 0
+    fi
     echo
+    read -p "tx Url : " urltx
+    if [ "${urltx}" != "" ]; then
+        certbot --nginx -d $urltx
+    else
+        echo
+        echo -e "\n${COLOR1}Url is empty, stop the process... ${NC}"
+        exit 0
+    fi
+    echo
+    read -p "php Url : " urlphp
+    if [ "${urlphp}" != "" ]; then
+        certbot --nginx -d $urlphp
+    else
+        echo
+        echo -e "\n${COLOR1}Url is empty, stop the process... ${NC}"
+        exit 0
+    fi
+    echo
+    read -p "panel Url : " urlpanel
+    if [ "${urlpanel}" != "" ]; then
+        certbot --nginx -d $urlpanel
+    else
+        echo
+        echo -e "\n${COLOR1}Url is empty, stop the process... ${NC}"
+        exit 0
+    fi
     echo -e "\n${COLOR2} Stop Nginx Server ... ${NC}"
     systemctl stop nginx
     echo
-    echo -e "\n${COLOR2} Create ssl directory in /etc/nginx/ssl ... ${NC}"
-    mkdir /etc/nginx/ssl
-    cp ./ssl/certif.pem /etc/nginx/ssl/certif.pem
-    cp ./ssl/certif.key /etc/nginx/ssl/certif.key
-    echo
-    echo -e "\n${COLOR2} Start Nginx Server ... ${NC}"
-    systemctl start nginx
-    echo
     echo -e "\n${COLOR2} SSL Files installation done ! ... ${NC}"
-    echo
-    echo -e "\n${COLOR2} Copy prodssl.conf in /etc/nginx/sites-enabled ... ${NC}"
-    cp ./nginxfiles/prodssl.conf /etc/nginx/sites-enabled/prodssl.conf
     echo
     echo -e "\n${COLOR2} Nginx Copy Configuration Files done ! ... ${NC}"
     echo
@@ -40,8 +61,29 @@ install_ssl(){
     echo -e "point to the ip of this server"
     echo -e "if you have a proxy, name this url for ex: prod.serverrp.com"
     read -p "Url : " urlprod
-    if [ "${urlprod}" != "" ]; then
+    if [ "${urlplay}" != "" ]; then
         sed -i "s/urlprod_here/$urlprod/g" /etc/nginx/sites-enabled/prodssl.conf
+    else
+        echo
+        echo -e "\n${COLOR1}Url is empty, stop the process... ${NC}"
+        exit 0
+    fi
+    if [ "${urltx}" != "" ]; then
+        sed -i "s/urltx_here/$urltx/g" /etc/nginx/sites-enabled/prodssltx.conf
+    else
+        echo
+        echo -e "\n${COLOR1}Url is empty, stop the process... ${NC}"
+        exit 0
+    fi
+    if [ "${urlphp}" != "" ]; then
+        sed -i "s/urlprodphp_here/$urlphp/g" /etc/nginx/sites-enabled/prodssl.conf
+    else
+        echo
+        echo -e "\n${COLOR1}Url is empty, stop the process... ${NC}"
+        exit 0
+    fi
+    if [ "${urlpanel}" != "" ]; then
+        sed -i "s/urlprodpanel_here/$urlpanel/g" /etc/nginx/sites-enabled/prodsslpanel.conf
     else
         echo
         echo -e "\n${COLOR1}Url is empty, stop the process... ${NC}"
@@ -93,6 +135,9 @@ install_ssl(){
     cp ./nginxfiles/default /etc/nginx/sites-available/default
     echo
     echo -e "\n${COLOR2}Configuration files done ! ... ${NC}"
+    echo
+    echo -e "\n${COLOR2} Start Nginx Server ... ${NC}"
+    systemctl start nginx
     echo
 }
 

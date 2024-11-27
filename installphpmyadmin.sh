@@ -23,19 +23,6 @@ install_phpm(){
     echo -e "${COLOR2}PHPmyadmin Installation ... ${NC}"
     apt-get install phpmyadmin -y
     echo
-    echo -e "\n${COLOR3}Url PhpMyAdmin ? ${NC}(ex: phpmyadmin.serverrp.com)"
-    echo -e "You must add A or CNAME Register in your Cloudflare DNS for this url"
-    echo -e "point to the ip of this server"
-    echo -e "then acces panel admin with : phpmyadmin.serverrp.com/phpmyadmin"
-    read -p "Url : " urlphpm
-    if [ "${urlphpm}" != "" ]; then
-        sed -i "s/urlprodphp_here/$urlphpm/g" /etc/nginx/sites-enabled/prodssl.conf
-    else
-        echo
-        echo -e "\n${COLOR1}Url is empty, stop the process... ${NC}"
-        exit 0
-    fi
-    echo
     echo -e "${COLOR2}PHPmyadmin Configuration ... ${NC}"
     cp ./phpmyadmin/config.inc.php /usr/share/phpmyadmin/config.inc.php
     echo

@@ -359,6 +359,11 @@ install_f2b(){
     iptables -A OUTPUT -j REJECTLOG
     iptables -A FORWARD -j REJECTLOG
 
+    # FTP passif mode
+    #------------------------------------------------------------------------------
+    iptables -A INPUT -p tcp -m tcp --dport 50000:50100 -j ACCEPT
+    iptables -A OUTPUT -p tcp -m tcp --dport 50000:50100 -j ACCEPT
+
     iptables-save > /etc/iptables/rules.v4
     iptables-save > /etc/iptables/rules.v6
     echo -e "${COLOR2}Configuration done... ${NC}"

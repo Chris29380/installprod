@@ -89,7 +89,7 @@ install_ssl(){
         exit 0
     fi
     if [ "${urlplay}" != "" ]; then
-        sed -i "s/urlprod_here/$urlprod/g" /etc/nginx/sites-enabled/prodssl.conf
+        sed -i "s/urlprod_here/$urlplay/g" /etc/nginx/sites-enabled/prodssl.conf
     else
         echo
         echo -e "\n${COLOR1}Url is empty, stop the process... ${NC}"

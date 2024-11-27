@@ -77,9 +77,9 @@ install_ssl(){
 
     cp ./nginxfiles/nginx.conf /etc/nginx/nginx.conf
     cp ./nginxfiles/default /etc/nginx/sites-available/default
-    cp ./nginxfiles/default /etc/nginx/sites-enabled/prodssl.conf
-    cp ./nginxfiles/default /etc/nginx/sites-enabled/prodssltx.conf
-    cp ./nginxfiles/default /etc/nginx/sites-enabled/prodssltx.conf
+    cp ./nginxfiles/prodssl.conf /etc/nginx/sites-enabled/prodssl.conf
+    cp ./nginxfiles/prodssltx.conf /etc/nginx/sites-enabled/prodssltx.conf
+    cp ./nginxfiles/prodssltx.conf /etc/nginx/sites-enabled/prodssltx.conf
 
     if [ "${urlmachine}" != "" ]; then
         sed -i "s/machine_url_here/$urlmachine/g" /etc/nginx/sites-enabled/default

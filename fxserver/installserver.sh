@@ -16,8 +16,11 @@ startserver(){
     FIVEM_PATH=/home/fivem/txAdmin/fxserver
 
     screen -S $SCREEN -X quit
+    sleep 10
     screen -dm -S $SCREEN
+    sleep 10
     screen -x $SCREEN -X stuff "bash $FIVEM_PATH/run.sh +set txAdminPort ${txport}"
+    sleep 15
     screen -r $SCREEN
 
 }

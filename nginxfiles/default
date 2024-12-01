@@ -2,8 +2,6 @@ server {
 	listen 80;
 	listen [::]:80;
 
-	server_name machine_url_here;
-
 	root /var/www/html;
 
     index index.html index.htm index.nginx-debian.html;

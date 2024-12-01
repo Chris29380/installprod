@@ -17,18 +17,6 @@ install_f2b(){
     echo -e "${COLOR2}UPDATE Packages ... ${NC}"
     apt-get update
     echo
-    #echo -e "${COLOR2}Fail2ban Installation ... ${NC}"
-    #apt-get install fail2ban -y
-    #echo
-    #echo -e "${COLOR2}Installation done ! ... ${NC}"
-    #echo
-    #echo -e "${COLOR2}Copy Configuration Files ... ${NC}"
-    #echo
-    #cp ./fail2ban/jail.local /etc/fail2ban/jail.local
-    #echo
-    #echo -e "${COLOR2}Fail2Ban Activation ... ${NC}"
-    #systemctl start fail2ban
-    #echo
     echo -e "${COLOR2}IPTable Installation ... ${NC}"
     echo
     sudo apt-get install iptables -y
@@ -312,8 +300,8 @@ install_f2b(){
     iptables -A OUTPUT -m state --state NEW -p tcp --dport 53 -j ACCEPT
 
     # Allow HTTP requests. Unencrypted, use with care.
-    iptables -A INPUT -m state --state NEW -p tcp --dport 80 -j ACCEPT
-    iptables -A OUTPUT -m state --state NEW -p tcp --dport 80 -j ACCEPT
+    # iptables -A INPUT -m state --state NEW -p tcp --dport 80 -j ACCEPT
+    # iptables -A OUTPUT -m state --state NEW -p tcp --dport 80 -j ACCEPT
 
     # Allow HTTPS requests.
     iptables -A INPUT -m state --state NEW -p tcp --dport 443 -j ACCEPT
@@ -324,8 +312,8 @@ install_f2b(){
     iptables -A OUTPUT -m state --state NEW -p tcp --dport "$SSHPORT" -j ACCEPT
 
     # Allow outgoing FTP requests. Unencrypted, use with care.
-    iptables -A INPUT -m state --state NEW -p tcp --dport 21 -j ACCEPT
-    iptables -A OUTPUT -m state --state NEW -p tcp --dport 21 -j ACCEPT
+    # iptables -A INPUT -m state --state NEW -p tcp --dport 21 -j ACCEPT
+    # iptables -A OUTPUT -m state --state NEW -p tcp --dport 21 -j ACCEPT
 
 
 

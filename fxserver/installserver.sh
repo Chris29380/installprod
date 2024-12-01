@@ -11,20 +11,6 @@ if [ "$(id -u)" != "0" ]; then
     exit 1
 fi
 
-startserver(){
-    SCREEN="fxserver"
-    FIVEM_PATH=/home/fivem/txAdmin/fxserver
-
-    screen -S $SCREEN -X quit
-    sleep 10
-    screen -dm -S $SCREEN
-    sleep 10
-    screen -x $SCREEN -X stuff "bash $FIVEM_PATH/run.sh +set txAdminPort ${txport}"
-    sleep 15
-    screen -r $SCREEN
-
-}
-
 echo
 echo -e "${COLOR2}Create Fivem Directory ... ${NC}"
 mkdir -p -v /home/fivem/
@@ -49,12 +35,21 @@ if [ "$urlartifact" != "" ]; then
     echo -e "${COLOR2}Install Screen ... ${NC}"
     apt-get install screen -y
     echo
-    echo -e "${COLOR2}Start Server ... ${NC}"
+    mkdir -p -v /home/fivem/txAdmin/fxserver/txData/baseserver
+    echo
+    echo -e "${COLOR2}Install TxAdmin ... ${NC}"
+    echo
+    echo -e "\n${COLOR3}txAdmin Port ? ${NC}(default:40120)"
+    read -p "txAdmin port: " txport
     echo
     echo -e "\n${COLOR3}txAdmin Port ? ${NC}(default:40120)"
     read -p "txAdmin port: " txport       
     if [ "${txport}" -ge 0 ] && [ "${txport}" -le 65535 ]; then
-        startserver
+        cp ./manage.sh /home/fivem/txAdmin/fxserver/manage.sh
+        sleep 5
+        sed -i "s/tx_port_here/$txport/g" /home/fivem/txAdmin/fxserver/manage.sh
+        sleedp 5
+        bash /home/fivem/txAdmin/fxserver/manage.sh install
     else
         echo -e "\n${COLOR1}Wrong txport number${NC} it must be 0 to 65535"
         exit 0

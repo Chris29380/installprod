@@ -1,4 +1,25 @@
 server {
+	listen 80;
+	listen [::]:80;
+
+	server_name machine_url_here;
+
+	root /var/www/html;
+
+    index index.html index.htm index.nginx-debian.html;
+
+	location / {
+		limit_req zone=floodurl ;
+        limit_conn floodurl 10;
+		if ($block_ua) {
+            return 403;
+        }
+		try_files $uri $uri/ =404;
+	}
+	
+}
+
+server {
 
 	listen 443 ssl;
 	listen [::]:443;

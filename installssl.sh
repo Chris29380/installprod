@@ -15,6 +15,7 @@ install_ssl(){
     echo
     echo -e "${COLOR2} Certbot Installation ... ${NC}"
     apt install -y certbot python3-certbot-nginx
+    sleep 10
     echo
     echo -e "${COLOR2} Create SSL Certificates ... ${NC}"
     read -p "Machine Url : " urlmachine
@@ -79,7 +80,7 @@ install_ssl(){
     cp ./nginxfiles/default /etc/nginx/sites-available/default
     cp ./nginxfiles/prodssl.conf /etc/nginx/sites-enabled/prodssl.conf
     cp ./nginxfiles/prodssltx.conf /etc/nginx/sites-enabled/prodssltx.conf
-    cp ./nginxfiles/prodssltx.conf /etc/nginx/sites-enabled/prodssltx.conf
+    cp ./nginxfiles/prodsslpanel.conf /etc/nginx/sites-enabled/prodsspanel.conf
 
     if [ "${urlmachine}" != "" ]; then
         sed -i "s/machine_url_here/$urlmachine/g" /etc/nginx/sites-enabled/default

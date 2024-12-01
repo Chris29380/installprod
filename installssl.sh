@@ -24,7 +24,7 @@ install_ssl(){
         certbot --nginx -d $urlmachine
         sleep 5
         if [ -d "/etc/letsencrypt/live/$urlmachine/"]; then
-            VALID=$((VALID+1))
+            VALID=1
         fi
     else
         echo
@@ -38,7 +38,7 @@ install_ssl(){
         certbot --nginx -d $urlplay
         sleep 5
         if [ -d "/etc/letsencrypt/live/$urlplay/"]; then
-            VALID=$((VALID+1))
+            VALID=2
         fi
     else
         echo
@@ -51,7 +51,7 @@ install_ssl(){
         certbot --nginx -d $urltx
         sleep 5
         if [ -d "/etc/letsencrypt/live/$urltx/"]; then
-            VALID=$((VALID+1))
+            VALID=3
         fi
     else
         echo
@@ -64,7 +64,7 @@ install_ssl(){
         certbot --nginx -d $urlphp
         sleep 5
         if [ -d "/etc/letsencrypt/live/$urlphp/"]; then
-            VALID=$((VALID+1))
+            VALID=4
         fi
     else
         echo
@@ -77,7 +77,7 @@ install_ssl(){
         certbot --nginx -d $urlpanel
         sleep 5
         if [ -d "/etc/letsencrypt/live/$urlpanel/"]; then
-            VALID=$((VALID+1))
+            VALID=5
         fi
     else
         echo
@@ -164,7 +164,7 @@ install_ssl(){
         echo
         echo -e "\n${COLOR}Error generation SSL Certificates | Stop process ${NC}"  
         exit 0
-    end
+    fi
     echo
     
 }

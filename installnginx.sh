@@ -26,6 +26,7 @@ install_nginx(){
     systemctl start nginx
     sleep 10
     systemctl status nginx
+    sleep 5
     bash installssl.sh
 }
 

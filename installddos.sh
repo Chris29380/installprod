@@ -300,8 +300,8 @@ install_f2b(){
     iptables -A OUTPUT -m state --state NEW -p tcp --dport 53 -j ACCEPT
 
     # Allow HTTP requests. Unencrypted, use with care.
-    # iptables -A INPUT -m state --state NEW -p tcp --dport 80 -j ACCEPT
-    # iptables -A OUTPUT -m state --state NEW -p tcp --dport 80 -j ACCEPT
+    iptables -A INPUT -m state --state NEW -p tcp --dport 80 -j ACCEPT
+    iptables -A OUTPUT -m state --state NEW -p tcp --dport 80 -j ACCEPT
 
     # Allow HTTPS requests.
     iptables -A INPUT -m state --state NEW -p tcp --dport 443 -j ACCEPT

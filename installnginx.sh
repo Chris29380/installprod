@@ -23,6 +23,9 @@ install_nginx(){
     echo
     echo -e "${COLOR2} Nginx Installation done ! ... ${NC}"
     echo
+    systemctl start nginx
+    sleep 10
+    systemctl status nginx
     bash installssl.sh
 }
 

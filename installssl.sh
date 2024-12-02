@@ -23,7 +23,7 @@ install_ssl(){
     if [ "${urlmachine}" != "" ]; then
         certbot --nginx -d $urlmachine
         sleep 5
-        if [ -d "/etc/letsencrypt/live/$urlmachine/"]; then
+        if [ -d "/etc/letsencrypt/live/$urlmachine/" ]; then
             VALID=1
         fi
     else
@@ -37,7 +37,7 @@ install_ssl(){
     if [ "${urlplay}" != "" ]; then
         certbot --nginx -d $urlplay
         sleep 5
-        if [ -d "/etc/letsencrypt/live/$urlplay/"]; then
+        if [ -d "/etc/letsencrypt/live/$urlplay/" ]; then
             VALID=2
         fi
     else
@@ -50,7 +50,7 @@ install_ssl(){
     if [ "${urltx}" != "" ]; then
         certbot --nginx -d $urltx
         sleep 5
-        if [ -d "/etc/letsencrypt/live/$urltx/"]; then
+        if [ -d "/etc/letsencrypt/live/$urltx/" ]; then
             VALID=3
         fi
     else
@@ -63,7 +63,7 @@ install_ssl(){
     if [ "${urlphp}" != "" ]; then
         certbot --nginx -d $urlphp
         sleep 5
-        if [ -d "/etc/letsencrypt/live/$urlphp/"]; then
+        if [ -d "/etc/letsencrypt/live/$urlphp/" ]; then
             VALID=4
         fi
     else
@@ -76,7 +76,7 @@ install_ssl(){
     if [ "${urlpanel}" != "" ]; then
         certbot --nginx -d $urlpanel
         sleep 5
-        if [ -d "/etc/letsencrypt/live/$urlpanel/"]; then
+        if [ -d "/etc/letsencrypt/live/$urlpanel/" ]; then
             VALID=5
         fi
     else
@@ -106,7 +106,7 @@ install_ssl(){
             exit 0
         fi
         if [ "${urlplay}" != "" ]; then
-            sed -i "s/urlprod_here/$urlplay/g" ./nginxfiles/prodssl.conf
+            sed -i "s/play_url_here/$urlplay/g" ./nginxfiles/prodssl.conf
         else
             echo
             echo -e "\n${COLOR1}Url is empty, stop the process... ${NC}"

@@ -144,14 +144,14 @@ install_ssl(){
     fi
 
     if [ "${cfxport}" != "" ] && [ "${cfxport}" -ge 0 ] && [ "${cfxport}" -le 65535 ]; then
-        sed -i "s/ipprod_port_here/localhost:$cfxport/g" /etc/nginx/sites-enabled/prodssl.conf
+        sed -i "s/ipprod_port_here/localhost:$cfxport/g" ./nginxfiles/prodssl.conf
     else
         echo
         echo -e "\n${COLOR1}Port is empty, or wrong value [ 0 - 65535 ] ... ${NC}"
         exit 0
     fi      
     if [ "${txport}" -ge 0 ] && [ "${txport}" -le 65535 ]; then
-        sed -i "s/iptxprod_port_here/localhost:$txport/g" /etc/nginx/sites-enabled/prodssltx.conf
+        sed -i "s/iptxprod_port_here/localhost:$txport/g" ./nginxfiles/prodssltx.conf
     else
         echo -e "\n${COLOR1}Wrong txport number${NC} it must be 0 to 65535"
         exit 0
@@ -159,9 +159,10 @@ install_ssl(){
 
     cp ./nginxfiles/nginx.conf /etc/nginx/nginx.conf
     cp ./nginxfiles/default /etc/nginx/sites-available/default
+    cp ./nginxfiles/default /etc/nginx/sites-enabled/default
     cp ./nginxfiles/prodssl.conf /etc/nginx/sites-enabled/prodssl.conf
     cp ./nginxfiles/prodssltx.conf /etc/nginx/sites-enabled/prodssltx.conf
-    cp ./nginxfiles/prodsslpanel.conf /etc/nginx/sites-enabled/prodsspanel.conf
+    cp ./nginxfiles/prodsslpanel.conf /etc/nginx/sites-enabled/prodsslpanel.conf
 
     echo
     echo -e "\n${COLOR2}Configuration files done ! ... ${NC}"

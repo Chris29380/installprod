@@ -40,16 +40,15 @@ if [ "$urlartifact" != "" ]; then
     echo -e "${COLOR2}Install TxAdmin ... ${NC}"
     echo
     echo -e "\n${COLOR3}txAdmin Port ? ${NC}(default:40120)"
-    read -p "txAdmin port: " txport
-    echo
-    echo -e "\n${COLOR3}txAdmin Port ? ${NC}(default:40120)"
-    read -p "txAdmin port: " txport       
+    read -p "txAdmin port: " txport   
     if [ "${txport}" -ge 0 ] && [ "${txport}" -le 65535 ]; then
         cp ./manage.sh /home/fivem/txAdmin/fxserver/manage.sh
         sleep 5
         sed -i "s/tx_port_here/$txport/g" /home/fivem/txAdmin/fxserver/manage.sh
-        sleedp 5
-        bash /home/fivem/txAdmin/fxserver/manage.sh install
+        sleed 5
+        echo -e "\n${COLOR3}Now execute command : bash manage.sh install \n and then connect to txadmin url."
+        echo
+        exit 0
     else
         echo -e "\n${COLOR1}Wrong txport number${NC} it must be 0 to 65535"
         exit 0

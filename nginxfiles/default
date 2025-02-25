@@ -1,7 +1,6 @@
 server {
 
-	listen 80
-
+	listen 80;
 	server_name machine_url_here;
 
 	root /var/www/html;
@@ -10,7 +9,6 @@ server {
 
 	location / {
 		limit_req zone=floodurl burst=20 delay=8 ;
-        limit_conn floodurl 10;
 		if ($block_ua) {
             return 403;
         }

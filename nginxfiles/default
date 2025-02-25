@@ -1,31 +1,8 @@
 server {
-	listen 80;
-	listen [::]:80;
 
-	root /var/www/html;
-
-    index index.html index.htm index.nginx-debian.html;
-
-	location / {
-		limit_req zone=floodurl ;
-        limit_conn floodurl 10;
-		if ($block_ua) {
-            return 403;
-        }
-		try_files $uri $uri/ =404;
-	}
-	
-}
-
-server {
-
-	listen 443 ssl;
-	listen [::]:443;
+	listen 80
 
 	server_name machine_url_here;
-	
-	ssl_certificate /etc/letsencrypt/live/machine_url_here/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/machine_url_here/privkey.pem;
 
 	root /var/www/html;
 

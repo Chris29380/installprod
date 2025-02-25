@@ -34,37 +34,11 @@ install_ssl(){
         echo -e "\n${COLOR1}Url is empty, stop the process... ${NC}"
         exit 0
     fi
-    if [ "${urlmachine}" != "" ]; then
-        certbot --nginx -d $urlmachine
-        sleep 5
-        if [ ! -d "/etc/letsencrypt/live/$urlmachine/" ]; then
-            echo
-            echo -e "\n${COLOR1}SSl Certification error, stop process... ${NC}"
-            exit 0
-        fi
-    else
-        echo
-        echo -e "\n${COLOR1}Url is empty, stop the process... ${NC}"
-        exit 0
-    fi
     echo
     echo -e "${COLOR2} Create SSL Certificates ... ${NC}"
     read -p "play Url : " urlplay
     if [ "${urlplay}" != "" ]; then
         sed -i "s/play_url_here/$urlplay/g" /etc/nginx/sites-enabled/default
-    else
-        echo
-        echo -e "\n${COLOR1}Url is empty, stop the process... ${NC}"
-        exit 0
-    fi
-    if [ "${urlplay}" != "" ]; then
-        certbot --nginx -d $urlplay
-        sleep 5
-        if [ ! -d "/etc/letsencrypt/live/$urlplay/" ]; then
-            echo
-            echo -e "\n${COLOR1}SSl Certification error, stop process... ${NC}"
-            exit 0
-        fi
     else
         echo
         echo -e "\n${COLOR1}Url is empty, stop the process... ${NC}"
@@ -79,19 +53,6 @@ install_ssl(){
         echo -e "\n${COLOR1}Url is empty, stop the process... ${NC}"
         exit 0
     fi
-    if [ "${urltx}" != "" ]; then
-        certbot --nginx -d $urltx
-        sleep 5
-        if [ ! -d "/etc/letsencrypt/live/$urltx/" ]; then
-            echo
-            echo -e "\n${COLOR1}SSl Certification error, stop process... ${NC}"
-            exit 0
-        fi
-    else
-        echo
-        echo -e "\n${COLOR1}Url is empty, stop the process... ${NC}"
-        exit 0
-    fi
     echo
     read -p "php Url : " urlphp
     if [ "${urlphp}" != "" ]; then
@@ -101,36 +62,10 @@ install_ssl(){
         echo -e "\n${COLOR1}Url is empty, stop the process... ${NC}"
         exit 0
     fi
-    if [ "${urlphp}" != "" ]; then
-        certbot --nginx -d $urlphp
-        sleep 5
-        if [ ! -d "/etc/letsencrypt/live/$urlphp/" ]; then
-            echo
-            echo -e "\n${COLOR1}SSl Certification error, stop process... ${NC}"
-            exit 0
-        fi
-    else
-        echo
-        echo -e "\n${COLOR1}Url is empty, stop the process... ${NC}"
-        exit 0
-    fi
     echo
     read -p "panel Url : " urlpanel
     if [ "${urlpanel}" != "" ]; then
         sed -i "s/urlprodpanel_here/$urlpanel/g" /etc/nginx/sites-enabled/default
-    else
-        echo
-        echo -e "\n${COLOR1}Url is empty, stop the process... ${NC}"
-        exit 0
-    fi
-    if [ "${urlpanel}" != "" ]; then
-        certbot --nginx -d $urlpanel
-        sleep 5
-        if [ ! -d "/etc/letsencrypt/live/$urlpanel/" ]; then
-            echo
-            echo -e "\n${COLOR1}SSl Certification error, stop process... ${NC}"
-            exit 0
-        fi
     else
         echo
         echo -e "\n${COLOR1}Url is empty, stop the process... ${NC}"
@@ -156,6 +91,77 @@ install_ssl(){
         echo -e "\n${COLOR1}Wrong txport number${NC} it must be 0 to 65535"
         exit 0
     fi
+
+    if [ "${urlmachine}" != "" ]; then
+        certbot --nginx -d $urlmachine
+        sleep 5
+        if [ ! -d "/etc/letsencrypt/live/$urlmachine/" ]; then
+            echo
+            echo -e "\n${COLOR1}SSl Certification error, stop process... ${NC}"
+            exit 0
+        fi
+    else
+        echo
+        echo -e "\n${COLOR1}Url is empty, stop the process... ${NC}"
+        exit 0
+    fi
+
+    if [ "${urlplay}" != "" ]; then
+        certbot --nginx -d $urlplay
+        sleep 5
+        if [ ! -d "/etc/letsencrypt/live/$urlplay/" ]; then
+            echo
+            echo -e "\n${COLOR1}SSl Certification error, stop process... ${NC}"
+            exit 0
+        fi
+    else
+        echo
+        echo -e "\n${COLOR1}Url is empty, stop the process... ${NC}"
+        exit 0
+    fi
+
+    if [ "${urltx}" != "" ]; then
+        certbot --nginx -d $urltx
+        sleep 5
+        if [ ! -d "/etc/letsencrypt/live/$urltx/" ]; then
+            echo
+            echo -e "\n${COLOR1}SSl Certification error, stop process... ${NC}"
+            exit 0
+        fi
+    else
+        echo
+        echo -e "\n${COLOR1}Url is empty, stop the process... ${NC}"
+        exit 0
+    fi
+
+    if [ "${urlphp}" != "" ]; then
+        certbot --nginx -d $urlphp
+        sleep 5
+        if [ ! -d "/etc/letsencrypt/live/$urlphp/" ]; then
+            echo
+            echo -e "\n${COLOR1}SSl Certification error, stop process... ${NC}"
+            exit 0
+        fi
+    else
+        echo
+        echo -e "\n${COLOR1}Url is empty, stop the process... ${NC}"
+        exit 0
+    fi
+
+    if [ "${urlpanel}" != "" ]; then
+        certbot --nginx -d $urlpanel
+        sleep 5
+        if [ ! -d "/etc/letsencrypt/live/$urlpanel/" ]; then
+            echo
+            echo -e "\n${COLOR1}SSl Certification error, stop process... ${NC}"
+            exit 0
+        fi
+    else
+        echo
+        echo -e "\n${COLOR1}Url is empty, stop the process... ${NC}"
+        exit 0
+    fi
+
     echo -e "\n${COLOR2} Stop Nginx Server ... ${NC}"
     systemctl stop nginx
     echo

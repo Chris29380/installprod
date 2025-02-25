@@ -25,7 +25,8 @@ install_ssl(){
     apt install -y certbot python3-certbot-nginx
     sleep 10
     echo
-    echo -e "${COLOR2} Create SSL Certificates ... ${NC}"
+    echo -e "\n${COLOR2} Stop Nginx Server ... ${NC}"
+    systemctl stop nginx
     read -p "Machine Url : " urlmachine
     if [ "${urlmachine}" != "" ]; then
         sed -i "s/machine_url_here/$urlmachine/g" /etc/nginx/sites-enabled/default
@@ -91,7 +92,10 @@ install_ssl(){
         echo -e "\n${COLOR1}Wrong txport number${NC} it must be 0 to 65535"
         exit 0
     fi
-
+    echo -e "\n${COLOR2} Start Nginx Server ... ${NC}"
+    systemctl start nginx
+    sleep 10
+    echo -e "${COLOR2} Create SSL Certificates ... ${NC}"
     if [ "${urlmachine}" != "" ]; then
         certbot --nginx -d $urlmachine
         sleep 5

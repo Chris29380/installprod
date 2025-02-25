@@ -17,3 +17,66 @@ server {
 	
 }
 
+server {
+    listen 80;
+    server_name play_url_here;
+
+    location / {
+        limit_req zone=floodurl burst=30 delay=8 ;
+        if ($block_ua) {
+            return 403;
+        }
+        proxy_pass https://ipprod_port_here;
+    }
+}
+
+server {
+    listen 80;
+    server_name urlprodphp_here;
+    
+    location /phpmyadmin {
+       if ($block_ua) {
+            return 403;
+        }
+        root /usr/share/;
+        index index.php index.html index.htm;
+        location ~ ^/phpmyadmin/(.+.php)$ {
+            root /usr/share/;
+            fastcgi_pass unix:/run/php/php8.2-fpm.sock;
+            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            include /etc/nginx/fastcgi_params;
+        }
+
+        location ~* ^/phpmyadmin/(.+.(jpg|jpeg|gif|css|png|js|ico|html|xml|txt))$ {
+            root /usr/share/;
+        }
+    }
+}
+
+server {
+    listen 80;
+    server_name urlprodpanel_here;
+
+    location / {
+        limit_req zone=floodurl burst=30 delay=8 ;
+        if ($block_ua) {
+            return 403;
+        }
+        proxy_pass http://localhost:10000;
+    }
+}
+
+server {
+    listen 80;
+    server_name urltx_here;
+
+    location / {
+        limit_req zone=floodurl burst=30 delay=8;
+        if ($block_ua) {
+            return 403;
+        }
+        proxy_pass http://iptxprod_port_here;
+    }
+}
+
+

@@ -315,6 +315,12 @@ install_f2b(){
     # iptables -A INPUT -m state --state NEW -p tcp --dport 21 -j ACCEPT
     # iptables -A OUTPUT -m state --state NEW -p tcp --dport 21 -j ACCEPT
 
+    # Allow DNS requests. Few things will work without this.
+    iptables -A INPUT -m state --state NEW -p udp --dport 10000 -j ACCEPT
+    iptables -A INPUT -m state --state NEW -p tcp --dport 10000 -j ACCEPT
+    iptables -A OUTPUT -m state --state NEW -p udp --dport 10000 -j ACCEPT
+    iptables -A OUTPUT -m state --state NEW -p tcp --dport 10000 -j ACCEPT
+
 
 
     echo -e "\n${COLOR3}txAdmin Port ? ${NC}(default:40120)"
